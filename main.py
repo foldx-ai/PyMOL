@@ -1,10 +1,11 @@
+import hashlib
 import pymol
 import requests
-import hashlib
+
 
 ATLAS_URI = "https://api.esmatlas.com/foldSequence/v1/pdb/"
 FOLDXAI_URI = 'https://api.foldx.ai/fb'
-
+valid = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y']
 foldx_seq = ""
 foldx_name = ""
 foldx_pdb = ""
@@ -49,6 +50,10 @@ def foldx(sequence:str, name: str=None) -> None:
         name = hashlib.md5(sequence.encode('utf-8')).hexdigest()[:6]
     foldx_name = name
     sequence = sequence.upper()
+    for i in sequence:
+        if i not in valid:
+            print('ERROR: Invalid  one-letter code. ' + i + ' is invalid.')
+            return
     foldx_seq = sequence
     response = requests.post(ATLAS_URI, data=sequence)
     if response.status_code > 299:
