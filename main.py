@@ -6,6 +6,12 @@ import requests
 ATLAS_URI = "https://api.esmatlas.com/foldSequence/v1/pdb/"
 FOLDXAI_URI = 'https://api.foldx.ai/fb'
 valid = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y']
+reccomendations = {'B': 'R',
+                   'J': 'I',
+                   'O': 'P',
+                   'U': 'C',
+                   'X': 'V',
+                   'Z': 'S'}
 foldx_seq = ""
 foldx_name = ""
 foldx_pdb = ""
@@ -52,7 +58,7 @@ def foldx(sequence:str, name: str=None) -> None:
     sequence = sequence.upper()
     for i in sequence:
         if i not in valid:
-            print('ERROR: Invalid  one-letter code. ' + i + ' is invalid.')
+            print('ERROR: Invalid  one-letter code. ' + i + ' is invalid. Did you mean ' + reccomendations[i] + '?')
             return
     foldx_seq = sequence
     response = requests.post(ATLAS_URI, data=sequence)
