@@ -61,7 +61,7 @@ def foldx(sequence:str, name: str=None) -> None:
             print('ERROR: Invalid  one-letter code. ' + i + ' is invalid. Did you mean ' + reccomendations[i] + '?')
             return
     foldx_seq = sequence
-    response = requests.post(ATLAS_URI, data=sequence)
+    response = requests.post(ATLAS_URI, data=sequence, verify=False)
     if response.status_code > 299:
         print('error:' + response.text)
         return
